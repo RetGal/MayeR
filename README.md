@@ -33,3 +33,23 @@ Damit *mayer_osiris.sh* die *Mayer* Instanz kontinuierlich überwachen kann, mus
 `*/6 *   *   *   *   /home/bot/balancer/mayer_osiris.sh`
 
 Die beiden Dateien *mayer.py* und *mayer_osiris.sh* müssen vor dem ersten Start mittels `chmod +x` ausführbar gemacht werden.
+
+Container builden
+
+```bash
+docker build -t  retgal/mayer:latest .
+```
+
+MayeR mit der externen config mayer.txt starten
+
+```bash
+docker run -it -v /opt/data:/opt/data -e MAYER_CONFIG="/opt/data/mayer" --name mayer retgal/mayer:latest
+```
+
+Die optionalen Parameter in der config sollten gesetzt sein und sich innerhalb des Volume-Pfads befinden.
+Also beispielsweise:
+
+```
+db_name = "/opt/data/mayer.db"
+mayer_file = "/opt/data/mayer.avg"
+```
