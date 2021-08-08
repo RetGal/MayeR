@@ -1,5 +1,5 @@
 [config]
-exchange = "EXCHANGE"
+exchange = "bitmex"
 # everything optional below this line
 db_name = ""
 mayer_file = ""
