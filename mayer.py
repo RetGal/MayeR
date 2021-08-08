@@ -18,7 +18,7 @@ import requests
 class ExchangeConfig:
     def __init__(self):
         config = configparser.ConfigParser()
-        config.read(INSTANCE + '.txt')
+        config.read('{}{}.txt'.format(DATA_DIR, INSTANCE))
         self.db_name = 'mayer.db'
         self.backup_mayer = ''
         self.mayer_file = INSTANCE + '.avg'
@@ -174,7 +174,7 @@ def calculate_daily_average(current: [tuple], price: float):
 
 
 def write_control_file():
-    with open(INSTANCE + '.mid', 'w') as file:
+    with open('{}{}.mid'.format(DATA_DIR, INSTANCE), 'w') as file:
         file.write(str(os.getpid()) + ' ' + INSTANCE)
 
 
@@ -280,8 +280,14 @@ def add_entry(date: datetime.date, price: float):
 
 
 if __name__ == "__main__":
+    DATA_DIR = ''
     if len(sys.argv) > 1:
-        INSTANCE = os.path.basename(sys.argv[1])
+        if os.path.sep in sys.argv[1]:
+            parts = sys.argv[1].split(os.path.sep)
+            INSTANCE = os.path.basename(parts.pop())
+            DATA_DIR = os.path.sep.join(parts) + os.path.sep
+        else:
+            INSTANCE = os.path.basename(sys.argv[1])
     else:
         INSTANCE = os.path.basename(input('Filename with API Keys (mayer): ') or 'mayer')
 
