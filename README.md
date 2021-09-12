@@ -48,6 +48,13 @@ MayeR mit der externen config mayer.txt starten
 docker run -it -v /opt/data:/opt/data -e MAYER_CONFIG="/opt/data/mayer" --name mayer retgal/mayer:latest
 ```
 
+Oder dasselbe ohne zu builden mit dem vorgefertigten von Dockerhub:
+
+```bash
+docker pull dockerocker/mayer
+docker run -it -v /opt/data:/opt/data -e MAYER_CONFIG="/opt/data/mayer" --name mayer dockerocker/mayer:latest
+```
+
 Die optionalen Parameter in der config sollten gesetzt sein und sich innerhalb des Volume-Pfads befinden.
 Also beispielsweise:
 
