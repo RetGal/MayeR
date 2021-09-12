@@ -20,7 +20,7 @@ Der Name der zu verwendenden Konfigurationsdatei kann als Parameter, ohne der Da
 
 Fehlt der Parameter, so fragt das Script bei jedem Start nach dem Namen der Konfigurationsdatei. Diesen gilt es ohne Dateierweiterung (*.txt*) einzugeben. Wird dieser Schritt übersprungen, so wird standardmässig die Konfiguration von *mayer.txt* verwendet.
 
-##Betrieb
+## Betrieb
 ### Mayer Instanz
 Soll die *MayeR* Instanz mit Hilfe des Watchdog-Scrpits *mayer_osiris.sh* überwacht werden, so ist die Installation von [tmux](https://github.com/tmux/tmux/wiki) notwendig.
 
