@@ -4,7 +4,7 @@ LABEL maintainer="retgal"
 # set a directory for the app
 WORKDIR /opt/mayer
 
-ENV MAYER_CONFIG "/opt/mayer/mayer"
+ENV MAYER_CONFIG "/opt/data/mayer"
 
 # create a volume for the app
 VOLUME /opt/data
