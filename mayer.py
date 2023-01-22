@@ -80,7 +80,7 @@ def get_current_price(tries: int = 0):
         LOG.error('Failed fetching current price, giving up after 10 attempts')
         return None
     try:
-        return float(EXCHANGE.fetch_ticker('BTC/USD')['bid'])
+        return float(EXCHANGE.fetch_ticker('XBTUSD')['bid'])
 
     except (ccxt.ExchangeError, ccxt.NetworkError) as error:
         LOG.debug('Got an error %s %s, retrying in 10 seconds...', type(error).__name__, str(error.args))
