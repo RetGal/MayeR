@@ -69,7 +69,7 @@ class MayerTest(unittest.TestCase):
     @patch('mayer.add_entry')
     @patch('mayer.fetch_rates',
            return_value=[{'Date': '2020-12-31', 'Price': 30030.3030}, {'Date': '2021-01-01', 'Price': 31031.3131},
-                         {'Date': '2021-01-02', 'Price': 32032.3232}])
+                         {'Date': '2021-01-02', 'Price': 32032.3232}, {'Date': '2021-01-02', 'Price': 33033.3333}])
     def test_complete_data(self, mock_fetch_rates, mock_add_entry):
         mayer.CONF = self.create_default_conf()
         mayer.CONF.backup_mayer = 'http://example.org'

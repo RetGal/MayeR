@@ -262,8 +262,10 @@ def fill_missing_rates(rates: [], last_date: datetime.date):
     Persists missing daily average prices
     """
     for entry in rates:
-        if datetime.datetime.strptime(entry['Date'], '%Y-%m-%d').date() > last_date:
+        current = datetime.datetime.strptime(entry['Date'], '%Y-%m-%d').date()
+        if current > last_date:
             add_entry(entry['Date'], entry['Price'])
+            last_date = current
 
 
 def add_entry(date: datetime.date, price: float):
@@ -300,7 +302,6 @@ if __name__ == "__main__":
     write_control_file()
     CONF = ExchangeConfig()
     EXCHANGE = connect_to_exchange()
-
     init_database()
 
     while 1:
