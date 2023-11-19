@@ -18,7 +18,7 @@ import requests
 class ExchangeConfig:
     def __init__(self):
         config = configparser.ConfigParser()
-        config.read('{}{}.txt'.format(DATA_DIR, INSTANCE))
+        config.read(f'{DATA_DIR}{INSTANCE}.txt')
         self.db_name = 'mayer.db'
         self.backup_mayer = ''
         self.mayer_file = INSTANCE + '.avg'
@@ -49,8 +49,7 @@ def function_logger(console_level: int, log_file: str = None, file_level: int = 
     logger.addHandler(ch)
 
     if log_file and file_level:
-        fh = RotatingFileHandler("{}.log".format(log_file), mode='a', maxBytes=5 * 1024 * 1024, backupCount=4,
-                                 encoding=None, delay=False)
+        fh = RotatingFileHandler(f'{log_file}.log', maxBytes=5 * 1024 * 1024, backupCount=4)
         fh.setLevel(file_level)
         fh.setFormatter(logging.Formatter('%(asctime)s - %(lineno)4d - %(levelname)-8s - %(message)s'))
         logger.addHandler(fh)
@@ -123,7 +122,7 @@ def get_average():
     curs = conn.cursor()
     try:
         return curs.execute(
-            "SELECT AVG(price) FROM rates WHERE date BETWEEN '{}' AND '{}'".format(dd_days_ago, today)).fetchone()
+            f"SELECT AVG(price) FROM rates WHERE date BETWEEN '{dd_days_ago}' AND '{today}'").fetchone()
     finally:
         curs.close()
         conn.close()
@@ -136,7 +135,7 @@ def delete_oldest():
     our_days = datetime.datetime.utcnow().date() - datetime.timedelta(days=200)
     conn = sqlite3.connect(CONF.db_name, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     curs = conn.cursor()
-    query = "DELETE FROM rates WHERE date < '{}'".format(our_days)
+    query = f"DELETE FROM rates WHERE date < '{our_days}'"
     try:
         curs.execute(query)
         conn.commit()
@@ -154,13 +153,13 @@ def persist_rate(price: float):
     today = datetime.datetime.utcnow().date()
     conn = sqlite3.connect(CONF.db_name)
     curs = conn.cursor()
-    current = curs.execute("SELECT count, price FROM rates WHERE date = '{}'".format(today)).fetchone()
+    current = curs.execute(f"SELECT count, price FROM rates WHERE date = '{today}'").fetchone()
     try:
         if not current:
-            query = "INSERT INTO rates VALUES ('{}', 1, {})".format(today, price)
+            query = f"INSERT INTO rates VALUES ('{today}', 1, {price})"
         else:
             avg = calculate_daily_average(current, price)
-            query = "UPDATE rates SET count = count+1, price = {} WHERE date = '{}'".format(avg, today)
+            query = f"UPDATE rates SET count = count+1, price = {avg} WHERE date = '{today}'"
         curs.execute(query)
         conn.commit()
     finally:
@@ -174,7 +173,7 @@ def calculate_daily_average(current: [tuple], price: float):
 
 
 def write_control_file():
-    with open('{}{}.mid'.format(DATA_DIR, INSTANCE), 'w') as file:
+    with open(f'{DATA_DIR}{INSTANCE}.mid', 'w') as file:
         file.write(str(os.getpid()) + ' ' + INSTANCE)
 
 
@@ -272,7 +271,7 @@ def add_entry(date: datetime.date, price: float):
     conn = sqlite3.connect(CONF.db_name)
     curs = conn.cursor()
     try:
-        query = "INSERT INTO rates VALUES ('{}', 1, {})".format(date, price)
+        query = f"INSERT INTO rates VALUES ('{date}', 1, {price})"
         curs.execute(query)
         conn.commit()
     finally:
