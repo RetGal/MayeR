@@ -203,12 +203,11 @@ def update_average():
     sleep_for(60)
 
 
-def sleep_for(greater: int, less: int = None):
-    if less:
-        seconds = round(random.uniform(greater, less), 3)
+def sleep_for(minimal: int, maximal: int = None):
+    if maximal:
+        time.sleep(round(random.uniform(minimal, maximal), 3))
     else:
-        seconds = greater
-    time.sleep(seconds)
+        time.sleep(minimal)
 
 
 def check_data():
