@@ -9,9 +9,7 @@ ENV MAYER_CONFIG "/opt/data/mayer"
 # create a volume for the app
 VOLUME /opt/data
 
-COPY requirements.txt ./
+COPY mayer.py requirements.txt ./
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
-
-COPY mayer.py ./
 
 CMD python ./mayer.py ${MAYER_CONFIG} -nolog
