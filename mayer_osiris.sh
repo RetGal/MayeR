@@ -14,7 +14,7 @@ resurrect() {
     tmux new -d -s "${instance}"
     sleep 1
   fi
-  tmux send-keys -t "${instance}" C-z "python ${workingDir}/${scriptName} ${instance} ${params}" C-m
+  tmux send-keys -t "${instance}" C-z "python ${workingDir}/${scriptName} ${instance}" C-m
 }
 
 activate_venv() {

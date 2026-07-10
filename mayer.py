@@ -174,7 +174,7 @@ def calculate_daily_average(current: [tuple], price: float):
 
 def write_control_file():
     with open(f'{DATA_DIR}{INSTANCE}.mid', 'w') as file:
-        file.write(str(os.getpid()) + ' ' + INSTANCE)
+        file.write(str(os.getpid()) + ' ' + INSTANCE + '\n')
 
 
 def write_average_file(avg: float):
